@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: telegramDownloader
+bot:
+  token: 5259975673:AAEvKJRY7L0e34_g0OrQH2g3bpASKU_r9-I
