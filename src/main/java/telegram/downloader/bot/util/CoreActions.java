@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -16,6 +17,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 public class CoreActions {
 
     private final TelegramClient telegramClient;
+    private final Helpers helpers;
 
     public void sendTrivialMessage(String chatId, String text) {
         var message = SendMessage.builder()
@@ -48,6 +50,18 @@ public class CoreActions {
                 .build();
         try {
             telegramClient.execute(sendPhoto);
+        } catch (TelegramApiException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    public void sendVideoToUser(String chatId, String videoUrl) {
+        var sendVideo = SendVideo.builder()
+                .chatId(chatId)
+                .video(new InputFile(videoUrl))
+                .build();
+        try {
+            telegramClient.execute(sendVideo);
         } catch (TelegramApiException e) {
             log.error(e.getMessage());
         }
