@@ -1,7 +1,14 @@
-FROM openjdk:21-slim
-
+# Сборка приложения
+FROM maven:3.9-eclipse-temurin-21-alpine AS build
 WORKDIR /app
-COPY target/TelegramDownloader-1.0.0.jar app.jar
-EXPOSE 8080
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
+RUN mvn package -DskipTests
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Создание образа
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/TelegramDownloader-1.0.0.jar /app/app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

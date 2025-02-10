@@ -21,20 +21,12 @@ public class Helpers {
         // Настройка подключения к Selenoid
         Configuration.remote = "http://selenoid:4444/wd/hub";
         Configuration.browser = "chrome";
-
-
-        // Опции Chrome
-        ChromeOptions options = new ChromeOptions();
+        var options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("user-agent=Mozilla/5.0 (Linux; arm_64; Android 15; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.6723.98 YaBrowser/24.12.1.98.00 SA/3 Mobile Safari/537.36");
-
-        // Подключение к Selenoid
-        var capabilities = new DesiredCapabilities();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-
         Configuration.browserCapabilities = options;
-        Configuration.headless = true;
+        Configuration.headless = false;
 
         open(instUrl);
         var videoElement = $x("//video[@src]");
