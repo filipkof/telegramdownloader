@@ -17,8 +17,8 @@ services:
       - selenoid
     command: ["--selenoid-uri", "http://selenoid:4444"]
 
-  telegram-bot:
-    image: filipkof/downloader-bot:latest
+  telegram-downloader-bot:
+    image: filipkof/telegram-downloader-bot:latest
     ports:
       - "8080:8080"
     depends_on:
