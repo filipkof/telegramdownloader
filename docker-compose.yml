@@ -1,28 +1,8 @@
 version: "3"
 services:
-  selenoid:
-    container_name: selenoid
-    image: aerokube/selenoid:latest-release
-    ports:
-      - "4444:4444"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ~/.aerokube/selenoid:/etc/selenoid
-    command: ["-limit", "10"]
-
-  selenoid-ui:
-    container_name: selenoid-ui
-    image: aerokube/selenoid-ui:latest
-    ports:
-      - "8081:8081"
-    links:
-      - selenoid
-    command: ["--selenoid-uri", "http://localhost:4444"]
 
   telegram-downloader-bot:
     container_name: downloader-bot
     image: filipkof/telegram-downloader-bot:latest
     ports:
-      - "8080:8080"
-    depends_on:
-      - selenoid
+      - "8081:8081"
